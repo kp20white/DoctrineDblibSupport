@@ -21,6 +21,8 @@ class DatabaseDriver extends DoctrineDatabaseDriver {
     
     private $schemaName = null;
 
+    private $generateRepositoryClass = false;
+
     /**
      * @var array
      */
@@ -89,6 +91,10 @@ class DatabaseDriver extends DoctrineDatabaseDriver {
         
         $metadata->name = $className;
         $metadata->table['name'] = $databaseName . '.' . $schemaName . '.' . $tableName;
+
+        if ($this->generateRepositoryClass) {
+            $metadata->customRepositoryClassName = $className . 'Repository';
+        }
 
         $columns = $this->tables[$tableName]->getColumns();
         $indexes = $this->tables[$tableName]->getIndexes();
@@ -248,6 +254,10 @@ class DatabaseDriver extends DoctrineDatabaseDriver {
     public function setSchemaName($schemaName) {
         $this->schemaName = $schemaName;
         return $this;
+    }
+
+    public function setGenerateRepositoryClass($bool = false) {
+        $this->generateRepositoryClass = $bool;
     }
 
     protected function reverseEngineerMappingFromDatabase()

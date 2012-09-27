@@ -58,6 +58,12 @@ EOT
                 $emOption->getDescription(),
                 $emOption->getDefault()
             ),
+            new InputOption(
+                "repository", 
+                null,                
+                InputOption::VALUE_NONE, 
+                "Force the command to generate a Repository class for its associated Entity"
+            ),
         );
         $definition->addOptions($additionalOptions);
 
@@ -107,6 +113,10 @@ EOT
                 );
         $databaseDriver->setDatabaseName($input->getOption('selected-database'));
         $databaseDriver->setSchemaName($input->getOption('selected-schema'));
+
+        if (isset($input->getOption('repository'))) {
+            $databaseDriver->setGenerateRepositoryClass(true);
+        }
 
         $em->getConfiguration()->setMetadataDriverImpl(
                 $databaseDriver
