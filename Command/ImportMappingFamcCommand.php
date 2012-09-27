@@ -114,7 +114,8 @@ EOT
         $databaseDriver->setDatabaseName($input->getOption('selected-database'));
         $databaseDriver->setSchemaName($input->getOption('selected-schema'));
 
-        if (isset($input->getOption('repository'))) {
+        $generateRepositoryOption = $input->getOption('repository');
+        if (isset($generateRepositoryOption)) {
             $databaseDriver->setGenerateRepositoryClass(true);
         }
 
