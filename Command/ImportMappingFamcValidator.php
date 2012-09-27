@@ -11,7 +11,7 @@
 
 namespace FAMC\Bundle\DoctrineDblibSupportBundle\Command;
 
-use FAMC\UtilityBundle\Classes\UtilityFunctions, 
+use FAMC\Bundle\UtilityBundle\Classes\UtilityFunctions, 
     Doctrine\ORM\EntityManager,
     Sensio\Bundle\GeneratorBundle\Command\Validators
     ;

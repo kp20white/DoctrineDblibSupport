@@ -1,8 +1,15 @@
 {
     "name": "famc/doctrine-dblib-support-bundle",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "http://git.franklinamerican.com/dev/symfony/utility-bundle.git"
+        }
+    ],
     "require": {
         "doctrine/doctrine-bundle": "dev-master",
-        "doctrine/orm": "2.3.x-dev"
+        "doctrine/orm": "2.3.x-dev",
+        "famc/utility-bundle": "dev-master"
     },
     "target-dir": "FAMC/Bundle/DoctrineDblibSupportBundle",
     "minimum-stability": "dev",
