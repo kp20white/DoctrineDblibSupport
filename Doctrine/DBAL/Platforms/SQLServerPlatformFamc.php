@@ -10,7 +10,7 @@ class SQLServerPlatformFamc extends DoctrineSQLServer2008Platform {
     }
     
     public function getListTablesPerDatabaseSQL($databaseName) {
-        return "SELECT name FROM $databaseName.sys.objects WHERE type = 'U' AND name NOT IN ('_Fillfactor_Tables', '_Indexes')";
+        return "SELECT name FROM $databaseName.sys.objects WHERE type = 'U' AND name NOT IN ('_Fillfactor_Tables', '_Indexes', 'DBA_ChangeCntrl','DBA_ChangeCntrl_Hist','dba_SchemaVerCntrl')";
     }
 
     /**
