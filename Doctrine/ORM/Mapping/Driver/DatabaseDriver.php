@@ -268,17 +268,17 @@ class DatabaseDriver extends DoctrineDatabaseDriver {
 
         $tables = array();
 
-        $tableNames = $this->_sm->listTableNamesPerDatabase($this->databaseName);
+        $tableNames = $this->_sm->listTableNamesPerDatabase($this->databaseName, $this->schemaName);
         foreach ($tableNames as $tableName) {
-            $tables[$tableName] = $this->_sm->listTableDetailsPerDatabase($tableName, $this->databaseName);
+            $tables[$tableName] = $this->_sm->listTableDetailsPerDatabase($tableName, $this->databaseName, $this->schemaName );
         }
 
-        $this->tables = 
-        $this->manyToManyTables = 
-        $this->classToTableNames = 
-        $this->classToSchemaNames = 
+        $this->tables = array();
+        $this->manyToManyTables = array();
+        $this->classToTableNames = array();
+        $this->classToSchemaNames = array();
         $this->classToDatabaseNames = array();
-        
+
         foreach ($tables as $tableName => $table) {
             /* @var $table \Doctrine\DBAL\Schema\Table */
             if ($this->_sm->getDatabasePlatform()->supportsForeignKeyConstraints()) {

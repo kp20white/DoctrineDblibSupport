@@ -17,7 +17,7 @@ class SQLServerSchemaManager extends DoctrineSQLServerSchemaManager {
      *
      * @return array
      */
-    public function listTableNamesPerDatabase($databaseName)
+    public function listTableNamesPerDatabase($databaseName, $schema = null)
     {
         $sql = $this->_platform->getListTablesPerDatabaseSQL($databaseName);
 
@@ -27,11 +27,13 @@ class SQLServerSchemaManager extends DoctrineSQLServerSchemaManager {
 
         // check if table indexes exist
         foreach ($tableNames as $tableName) {
+            if(!is_null($schema)) {
+                $tableName = sprintf("%s.%s", $schema,$tableName);
+            }
+
             $sql = $this->_platform->getListTableIndexesPerDatabaseSQL($tableName, $databaseName);
 
-            $stmt = $this->_conn->executeQuery($sql);
-            $indexNames = $stmt->fetchAll();
-            $stmt->closeCursor();
+            $indexNames = $this->_conn->fetchAll($sql);
 
             if (count($indexNames) > 0) {
                 $this->tableIndexesExist[$databaseName] = true;
@@ -63,11 +65,14 @@ class SQLServerSchemaManager extends DoctrineSQLServerSchemaManager {
      * @param  string $tableName
      * @return Table
      */
-    public function listTableDetailsPerDatabase($tableName, $databaseName) {
+    public function listTableDetailsPerDatabase($tableName, $databaseName, $schema = null) {
         $columns = $this->listTableColumnsPerDatabase($tableName, $databaseName);
         $foreignKeys = array();
         if ($this->_platform->supportsForeignKeyConstraints()) {
             $foreignKeys = $this->listTableForeignKeysPerDatabase($tableName, $databaseName);
+        }
+        if(!is_null($schema)){
+            $tableName = sprintf("%s.%s", $schema, $tableName);
         }
         $indexes = $this->listTableIndexesPerDatabase($tableName, $databaseName);
 
